@@ -158,3 +158,42 @@ select funcionario.nomeFuncionario, gerente.nomeFuncionario
 from funcionario
 inner join funcionario gerente
 on funcionario.gerente = gerente.matricula
+
+
+-- ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+-- Outros comandos e recomendações
+-- recomendações
+'''
+Alias, limit, distinct, case, union e union all
+Boas práticas:
+	Não use o asterisco (*) no comando select
+    Use filtros (where) no delete e no update
+    Evite criar um insert com várias linhas
+'''
+
+-- Outros comandos
+-- alias
+select nomeFuncionario as 'Nome Funcionario' from funcionario
+
+-- limit
+select nomeFuncionario from funcionario limit 3
+
+-- union
+select nomeFuncionario from funcionario
+union
+select nomeCidade from cidade
+
+-- union all
+select nomeFuncionario from funcionario
+union all
+select nomeCidade from cidade
+
+-- case
+select nomeFuncionario 'Nome do Funcionario',
+case
+	when genero = 'F' then 'Feminino'
+	when genero = 'M' then 'Masculino'
+end as 'Genero'
+from funcionario;
+

@@ -197,3 +197,109 @@ case
 end as 'Genero'
 from funcionario;
 
+-- //////////////////////////////////////////////////////
+-- aula pratica
+
+use aula;
+set SQL_SAFE_UPDATES = 0;
+
+select * from cidade;
+select * from funcionario;
+select * from cliente;
+
+update funcionario
+set cidadeId = (select id from cidade where nomeCidade = 'Recife')
+where matricula = 2;
+
+
+update funcionario
+set nomeFuncionario = 'Joao da Silva', departamento = 3
+where matricula = 2;
+
+
+select * from cidade;
+insert into cidade (id, nomeCidade, estadoId) values (7, 'Londrinha', 1);
+
+
+delete from cliente where id = 5;
+delete from cliente where nomeCliente = 'Helena Magalhães';
+
+select * from funcionario;
+
+delete from funcionario
+where departamento = 1
+and genero = 'M';
+
+select * from cliente;
+delete from cliente where cidadeId in
+(select id from cidade where nomeCidade = 'Curitiba');
+
+
+truncate table cliente;
+
+select * from cliente where genero = 'M';
+
+select * from funcionario
+where salario >= 5000
+and salario <= 8000;
+
+
+select * from cliente;
+
+-- null / not null
+select * from cidade where estadoId is null;
+select * from cidade where estadoId is not null;
+
+-- like
+select nomeCliente, salario from cliente where nomeCliente like '%silva%';
+
+-- in
+select nomeCliente, nascimento, salario from cliente where cidadeId in (1, 2, 3, 4, 5);
+select nomeCliente, nascimento, salario from cliente where cidadeId not in (1, 2, 3, 4, 5);
+
+select nomeCliente, nascimento, salario from cliente where cidadeId = 1 or cidadeId = 2 or cidadeId = 4;
+
+-- between
+select * from funcionario where cidadeId between 1 and 4;
+select * from funcionario where cidadeId not between 1 and 4;
+
+select * from funcionario where cidadeId >= 1 and cidadeId <= 4;
+
+select * from funcionario order by nomeFuncionario desc, salario asc;
+
+select * from funcionario order by 4 asc;
+
+-- limit
+select * from funcionario limit 3;
+
+-- case
+select nomeFuncionario as 'Nome Funcionario',
+	Case
+		When genero = 'M' Then 'Masculino'
+        When genero = 'F' Then 'Feminino'
+        else 'Outro'
+	end as 'Genero'
+from funcionario;
+
+-- alias
+select nomeFuncionario 'Nome do Funcionário',
+salario as 'Salário atual',
+salario * 1.10 as 'Novo salário'
+from funcionario;
+
+-- junção
+select * from funcionario;
+select * from cidade;
+
+select nomeFuncionario as 'Nome do Funcionário', nomeCidade as 'Nome da Cidade'
+from funcionario as f
+inner join cidade as c
+on f.cidadeId = c.id;
+
+select nomeCliente, nascimento from cliente
+union
+select nomeFuncionario, nascimento from funcionario;
+
+
+
+

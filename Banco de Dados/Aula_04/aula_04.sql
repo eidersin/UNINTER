@@ -296,10 +296,94 @@ from funcionario as f
 inner join cidade as c
 on f.cidadeId = c.id;
 
+-- union
 select nomeCliente, nascimento from cliente
 union
 select nomeFuncionario, nascimento from funcionario;
 
+select nomeCliente, nascimento from cliente
+union all
+select nomeFuncionario, nascimento from funcionario;
+
+-- distinct
+select nomeCliente from cliente order by nomeCliente;
+select distinct nomeCliente from cliente order by nomeCliente;
+
+-- distinct com mais colunas
+select nomeCliente, email from cliente order by nomeCliente;
+select distinct nomeCliente, email from cliente order by nomeCliente;
+
+-- inner join - equi-non
+select nomeCidade, nomeEstado, sigla
+from cidade c
+inner join estado e
+on c.estadoID = e.id;
+
+-- usando where
+select nomeCidade, nomeEstado, sigla
+from cidade c, estado e
+where c.estadoId = e.id;
 
 
+-- left join
+select nomeCidade, nomeEstado, sigla
+from cidade c
+left join estado e
+on c.estadoId = e.id;
 
+-- right join
+select nomeCidade, nomeEstado, sigla
+from cidade c
+right join estado e
+on c.estadoId = e.id;
+
+-- union join
+select nomeCidade, nomeEstado, sigla
+from cidade c
+left join estado e
+on c.estadoId = e.id
+union
+select nomeCidade, nomeEstado, sigla
+from cidade c
+right join estado e
+on c.estadoId = e.id
+where c. estadoId is null;
+
+-- crossjoin
+select nomeFuncionario, pergunta
+from pergunta
+cross join
+funcionario;
+
+
+-- Self join com inner join
+select f.nomeFuncionario as 'Nome Funcionario', g.nomeFuncionario as 'Nome Gerente'
+from funcionario f
+inner join funcionario g
+on f.gerente = g.matricula
+order by f.nomeFuncionario;
+
+-- Self join com left join
+select f.nomeFuncionario as 'Nome Funcionario', g.nomeFuncionario as 'Nome Gerente'
+from funcionario f
+left join funcionario g
+on f.gerente = g.matricula
+order by f.nomeFuncionario;
+
+-- Self join com righ join
+select f.nomeFuncionario as 'Nome Funcionario', g.nomeFuncionario as 'Nome Gerente'
+from funcionario f
+right join funcionario g
+on f.gerente = g.matricula
+order by f.nomeFuncionario;
+
+select * from cidade;
+
+-- Join com várias tabelas
+select nomeFuncionario, nomeCidade, nomeEstado
+from funcionario f
+inner join cidade c
+on f.cidadeId = c.id
+inner join estado e
+on c.estadoId = e.id
+order by f.nomeFuncionario;

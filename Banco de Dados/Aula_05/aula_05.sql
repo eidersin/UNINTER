@@ -95,4 +95,62 @@ select datediff('2025-10-10', curdate());
 -- ////////////////////////////////////////////////////////////////////////////////////////////////////////
 -- ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
--- AGREGAÇÃO / EXTRAÇÃO DE DADOS
+-- Agregação / Extração de dados
+select * from cliente;
+select * from funcionario;
+
+-- count
+select count(*) from funcionario;
+select count(*), count(genero) from funcionario;
+
+-- sum
+select sum(salario) from funcionario;
+
+-- min / max
+select nome, nascimento
+from funcionario
+where nascimento = (SELECT MIN(nascimento) FROM funcionario);
+
+select min(salario), max(salario) from funcionario;
+
+select nome, salario
+from funcionario
+where salario = (SELECT MIN(salario) FROM funcionario);
+
+select nome, salario
+from funcionario
+where salario = (SELECT MAX(salario) FROM funcionario);
+
+select nome, salario
+from funcionario
+where salario in (SELECT MAX(salario) FROM funcionario
+					UNION ALL
+                    SELECT MIN(salario) FROM funcionario);
+
+-- avg
+select avg(salario) from funcionario;
+
+-- group by
+select departamento, cargo, sum(salario) from funcionario
+group by departamento, cargo;
+
+-- having
+select departamento, sum(salario)
+from funcionario
+group by departamento
+having sum(salario) > 20000
+order by 1;
+
+
+-- ////////////////////////////////////////////////////////////////////////////////////////////////////////
+-- ////////////////////////////////////////////////////////////////////////////////////////////////////////
+-- ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+-- INTEGRIDADE E SEGURANÇA DE DADOS
+create user 'aluno2' identified by '123';
+
+flush privileges;
+
+show grants for 'aluno2';
+
+grant select, insert on aula.* to 'aluno2';
